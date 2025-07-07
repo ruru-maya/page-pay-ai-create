@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -54,38 +55,25 @@ export default function PaymentPageGenerator() {
 
     setIsGenerating(true);
     try {
-      // Simulate API call to backend
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const { data, error } = await supabase.functions.invoke('generate-payment-page', {
+        body: {
+          productName: formData.productName,
+          description: formData.description,
+          price: formData.price,
+          availability: formData.availability,
+          brandColor: formData.brandColor,
+        },
+      });
+
+      if (error) {
+        throw new Error(error.message || 'Failed to generate payment page');
+      }
       
-      // Mock generated HTML
-      const mockHtml = `
-<!DOCTYPE html>
-<html>
-<head>
-  <title>${formData.productName} - Payment Page</title>
-  <style>
-    body { font-family: 'Inter', sans-serif; margin: 0; background: linear-gradient(135deg, ${formData.brandColor}15, #ffffff); }
-    .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-    .hero { text-align: center; margin-bottom: 60px; }
-    .price { font-size: 3rem; font-weight: bold; color: ${formData.brandColor}; }
-    .cta-button { background: ${formData.brandColor}; color: white; padding: 16px 32px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="hero">
-      <h1>${formData.productName}</h1>
-      <p>${formData.description}</p>
-      <div class="price">$${formData.price}</div>
-      <p>${formData.availability}</p>
-      <!-- PAYMENT_WIDGET_PLACEHOLDER -->
-      <button class="cta-button">Pay Now</button>
-    </div>
-  </div>
-</body>
-</html>`;
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to generate payment page');
+      }
       
-      setGeneratedHtml(mockHtml);
+      setGeneratedHtml(data.generatedHtml);
       setStep(3);
       
       toast({
@@ -93,9 +81,10 @@ export default function PaymentPageGenerator() {
         description: "Your AI-powered payment page is ready for preview"
       });
     } catch (error) {
+      console.error('Generation error:', error);
       toast({
         title: "Generation Failed",
-        description: "Please try again",
+        description: error.message || "Please try again",
         variant: "destructive"
       });
     }
