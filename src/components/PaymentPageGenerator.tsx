@@ -43,6 +43,32 @@ export default function PaymentPageGenerator() {
     setFormData(prev => ({ ...prev, images: files }));
   };
 
+  const uploadImages = async (): Promise<string[]> => {
+    const imageUrls: string[] = [];
+    
+    for (const file of formData.images) {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+      
+      const { data, error } = await supabase.storage
+        .from('payment-images')
+        .upload(fileName, file);
+      
+      if (error) {
+        console.error('Upload error:', error);
+        throw new Error(`Failed to upload ${file.name}`);
+      }
+      
+      const { data: { publicUrl } } = supabase.storage
+        .from('payment-images')
+        .getPublicUrl(fileName);
+      
+      imageUrls.push(publicUrl);
+    }
+    
+    return imageUrls;
+  };
+
   const handleGenerate = async () => {
     if (!formData.productName || !formData.price) {
       toast({
@@ -55,6 +81,16 @@ export default function PaymentPageGenerator() {
 
     setIsGenerating(true);
     try {
+      // Upload images first if any
+      let imageUrls: string[] = [];
+      if (formData.images.length > 0) {
+        toast({
+          title: "Uploading Images...",
+          description: `Uploading ${formData.images.length} image(s)`,
+        });
+        imageUrls = await uploadImages();
+      }
+
       const { data, error } = await supabase.functions.invoke('generate-payment-page', {
         body: {
           productName: formData.productName,
@@ -62,6 +98,7 @@ export default function PaymentPageGenerator() {
           price: formData.price,
           availability: formData.availability,
           brandColor: formData.brandColor,
+          imageUrls: imageUrls,
         },
       });
 

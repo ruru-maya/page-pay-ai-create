@@ -18,9 +18,14 @@ serve(async (req) => {
   }
 
   try {
-    const { productName, description, price, availability, brandColor } = await req.json();
+    const { productName, description, price, availability, brandColor, imageUrls = [] } = await req.json();
 
     console.log('Generating payment page for:', productName);
+
+    // Create image list for prompt
+    const imageList = imageUrls.length > 0 
+      ? imageUrls.map((url, index) => `Image ${index + 1}: ${url}`).join('\n- ')
+      : 'no images provided';
 
     // Create OpenAI prompt for generating payment page HTML
     const prompt = `You are a world-class creative web designer, specializing in high-converting, visually dynamic landing pages for modern brands.
@@ -33,7 +38,7 @@ Generate a visually stunning, responsive, SEO-optimized HTML+CSS landing page in
 - Price: $${price}
 - Availability: ${availability || 'Available now'}
 - Brand color: ${brandColor}
-- Images: no image provided
+- Images: ${imageList}
 
 **Visual & UX requirements:**
 - Use Vivid Money's branding: primary color #6A57FF, secondary #00DAB5, modern white backgrounds, bold headings, and official logo in the sticky footer.
