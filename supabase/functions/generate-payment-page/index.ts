@@ -23,37 +23,38 @@ serve(async (req) => {
     console.log('Generating payment page for:', productName);
 
     // Create OpenAI prompt for generating payment page HTML
-    const prompt = `You are a world-class conversion designer, copywriter and web developer.
+    const prompt = `You are a world-class creative web designer, specializing in high-converting, visually dynamic landing pages for modern brands.
 
-Generate a modern, high-converting, SEO-optimized payment landing page in Vivid Money style for the following offer:
+Your task: 
+Generate a visually stunning, responsive, SEO-optimized HTML+CSS landing page in Vivid Money style for the following offer:
 
-Product/service name: ${productName}
-Description: ${description || 'Premium product'}
-Price: $${price}
-Availability: ${availability || 'Available now'}
-Brand color: ${brandColor}
-Images: no image provided
+- Product/service name: ${productName}
+- Description: ${description || 'Premium product'}
+- Price: $${price}
+- Availability: ${availability || 'Available now'}
+- Brand color: ${brandColor}
+- Images: no image provided
 
-Requirements:
-- Use brand color ${brandColor} as primary colors and clean, modern white background.
-- Use 'Inter', 'Montserrat', or a similar sans-serif font.
-- Include a footer banner with "Powered by Vivid Money" (always visible, sticky at the bottom) with purple background (#6A57FF).
-- Large, bold H1 for product/service name, use H2 for sections.
-- Beautiful card-like layout with soft shadows and rounded corners.
-- Responsive/mobile-friendly design (use media queries).
-- SEO meta tags: title, meta description, Open Graph, Twitter card, product structured data.
-- Write a more compelling, user-friendly product description using persuasive, conversational language (expand and improve "${description || 'Premium product'}" if needed).
-- Section for up to 3 product images (or placeholder image with description if none provided).
-- "Pay Now" CTA button, styled in Vivid Money purple (#6A57FF) with hover effects.
-- "${availability || 'Limited offer'}" highlighted prominently (e.g. "Only 5 left!" or similar urgency).
-- Add at least one sample testimonial ("This was the easiest payment ever! – Happy customer").
-- Include trust indicators and security badges.
-- Add subtle animations and hover effects for modern feel.
-- Include placeholder for payment widget with comment: <!-- PAYMENT_WIDGET_PLACEHOLDER -->
-- Use modern CSS Grid/Flexbox layouts.
-- Return a single, valid HTML file with embedded CSS, and nothing else.
+**Visual & UX requirements:**
+- Use Vivid Money's branding: primary color #6A57FF, secondary #00DAB5, modern white backgrounds, bold headings, and official logo in the sticky footer.
+- The landing page must be divided into 3-5 distinct "frames" or "cards" (sections), each visually separated as if they could be exported as Instagram carousel slides, or summarized into a single stylish card for Instagram post.
+- Use large, bold H1 for the title, H2 for sections, playful but clean font (Inter/Montserrat).
+- **Image usage:** Place images in creative, dynamic ways across the frames—mix shapes (circle, rounded square, blob, slanted mask, etc.), not just rectangles. At least one image should be displayed as a circle or custom shape, and consider overlapping or offset image+text sections for a modern look.
+- Use soft shadows, gentle gradients, subtle animations (CSS transitions), and white space for a premium look.
+- CTA "Pay Now" button should be elegant and visible but **not overpowering**—blend it into the design, not as the primary focal point.
+- Each frame/section should be visually "shareable" (as carousel slide or Instagram card).
+- Add at least one sample testimonial in a styled bubble.
+- Highlight price and availability in an attractive but non-aggressive way.
+- Responsive/mobile friendly layout (flex, grid, media queries).
+- Add SEO tags: meta title, description, OG tags, Twitter card, product structured data.
+- Return a single, valid HTML file with all embedded CSS (no external JS or CSS).
 - All text in English.
-- Focus on conversion optimization with persuasive copy and clear value proposition.`;
+
+If multiple images are provided, use them strategically in different frames/sections. Style the frames in the manner of popular Instagram carousel templates (e.g. Canva), with creative masks, gradients, and dynamic layouts.
+Make the design visually delightful, modern, and highly brandable, suitable for social sharing.
+
+Return only the complete HTML file.
+Do not show AI responses in the preview`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
