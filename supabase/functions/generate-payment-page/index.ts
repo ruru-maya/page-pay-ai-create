@@ -28,10 +28,10 @@ serve(async (req) => {
       : 'no images provided';
 
     // Create OpenAI prompt for generating payment page HTML
-    const prompt = `You are a world-class creative web designer, specializing in high-converting, visually dynamic landing pages for modern brands.
+    const prompt = `You are a top-tier creative web designer and copywriter specialising in social-media-ready landing pages.
 
-Your task: 
-Generate a visually stunning, responsive, SEO-optimized HTML+CSS landing page in Vivid Money style for the following offer:
+Your task:
+Generate a visually stunning, mobile-first, SEO-optimized HTML+CSS landing page styled for Vivid Money users, for the following offer:
 
 - Product/service name: ${productName}
 - Description: ${description || 'Premium product'}
@@ -40,26 +40,31 @@ Generate a visually stunning, responsive, SEO-optimized HTML+CSS landing page in
 - Brand color: ${brandColor}
 - Images: ${imageList}
 
-**Visual & UX requirements:**
-- Use Vivid Money's branding: primary color #6A57FF, secondary #00DAB5, modern white backgrounds, bold headings, and official logo in the sticky footer.
-- The landing page must be divided into 3-5 distinct "frames" or "cards" (sections), each visually separated as if they could be exported as Instagram carousel slides, or summarized into a single stylish card for Instagram post.
-- Use large, bold H1 for the title, H2 for sections, playful but clean font (Inter/Montserrat).
-- **Image usage:** Place images in creative, dynamic ways across the frames—mix shapes (circle, rounded square, blob, slanted mask, etc.), not just rectangles. At least one image should be displayed as a circle or custom shape, and consider overlapping or offset image+text sections for a modern look.
-- Use soft shadows, gentle gradients, subtle animations (CSS transitions), and white space for a premium look.
-- CTA "Pay Now" button should be elegant and visible but **not overpowering**—blend it into the design, not as the primary focal point.
-- Each frame/section should be visually "shareable" (as carousel slide or Instagram card).
-- Add at least one sample testimonial in a styled bubble.
-- Highlight price and availability in an attractive but non-aggressive way.
-- Responsive/mobile friendly layout (flex, grid, media queries).
-- Add SEO tags: meta title, description, OG tags, Twitter card, product structured data.
-- Return a single, valid HTML file with all embedded CSS (no external JS or CSS).
-- All text in English.
+**Requirements:**
+- Divide the landing page into exactly same number as the number of images of separate "frames" or "slides" as if for an Instagram carousel. 
+- Each frame/slide must prominently feature **one photo** (from imageUrls) in a unique, creative way (use different shapes: one circular, one with a blob mask, one with a rounded rectangle, etc.).
+- Each slide should have a distinct focus, for example:
+  1. **Slide 1:** Catchy, persuasive headline and hero image that creates instant desire. 
+  2. **Slide 2:** Visual presentation of features, benefits, and what's included, with dynamic image placement and creative typography.
+  3. **Slide 3:** Price, availability, a persuasive testimonial, and a subtle but clear "Pay Now" CTA.
+- **Text must be highly persuasive, conversational, and energetic.** Use engaging microcopy and short, impactful sentences. Each sentence should go to new line.
+- Layout should be visually dynamic, using Vivid Money's primary (#6A57FF) and secondary (#00DAB5) colors, lots of white space, and modern, soft card-style backgrounds.
+- Integrate the Vivid Money logo in the sticky footer with "Powered by Vivid Money."
+- Highlight the price and offer in an attractive but non-pushy manner.
+- All design must be "Instagram-shareable" — each slide looks great on its own, with well-balanced visuals and text.
+- draw inspiration from top Instagram carousel templates
+- The "Pay Now" button should be present but not overpowering (use as a stylish element).
+- Responsive/mobile friendly, use modern CSS (grid, flex, media queries).
+- Add SEO meta tags (title, description, OG, Twitter card, product schema).
+- Output only a single, valid HTML file with embedded CSS.
 
-If multiple images are provided, use them strategically in different frames/sections. Style the frames in the manner of popular Instagram carousel templates (e.g. Canva), with creative masks, gradients, and dynamic layouts.
-Make the design visually delightful, modern, and highly brandable, suitable for social sharing.
+**Special Instructions:**
+- Make sure each of the slides/frames uses a different photo from the list, with no photo repeated.
+- Do NOT place all photos on a single frame.
+- Make the copy fun, memorable, and tailored for a social-media audience.
+- All text must be in English.
 
-Return only the complete HTML file.
-Do not show AI responses in the preview`;
+Return ONLY the full HTML file with embedded CSS (no extra text).`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
