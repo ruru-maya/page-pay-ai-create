@@ -23,29 +23,37 @@ serve(async (req) => {
     console.log('Generating payment page for:', productName);
 
     // Create OpenAI prompt for generating payment page HTML
-    const prompt = `Create a professional, conversion-optimized payment page HTML for the following product:
+    const prompt = `You are a world-class conversion designer, copywriter and web developer.
 
-Product: ${productName}
+Generate a modern, high-converting, SEO-optimized payment landing page in Vivid Money style for the following offer:
+
+Product/service name: ${productName}
 Description: ${description || 'Premium product'}
 Price: $${price}
 Availability: ${availability || 'Available now'}
-Brand Color: ${brandColor}
+Brand color: ${brandColor}
+Images: no image provided
 
 Requirements:
-- Modern, clean design with excellent UX
-- Mobile responsive
-- Trust indicators and security badges
-- Clear call-to-action button
-- Professional typography
-- Use the brand color (${brandColor}) for primary elements
+- Use brand color ${brandColor} as primary colors and clean, modern white background.
+- Use 'Inter', 'Montserrat', or a similar sans-serif font.
+- Include a footer banner with "Powered by Vivid Money" (always visible, sticky at the bottom) with purple background (#6A57FF).
+- Large, bold H1 for product/service name, use H2 for sections.
+- Beautiful card-like layout with soft shadows and rounded corners.
+- Responsive/mobile-friendly design (use media queries).
+- SEO meta tags: title, meta description, Open Graph, Twitter card, product structured data.
+- Write a more compelling, user-friendly product description using persuasive, conversational language (expand and improve "${description || 'Premium product'}" if needed).
+- Section for up to 3 product images (or placeholder image with description if none provided).
+- "Pay Now" CTA button, styled in Vivid Money purple (#6A57FF) with hover effects.
+- "${availability || 'Limited offer'}" highlighted prominently (e.g. "Only 5 left!" or similar urgency).
+- Add at least one sample testimonial ("This was the easiest payment ever! – Happy customer").
+- Include trust indicators and security badges.
+- Add subtle animations and hover effects for modern feel.
 - Include placeholder for payment widget with comment: <!-- PAYMENT_WIDGET_PLACEHOLDER -->
-- Include meta tags for SEO
-- Optimize for conversions with social proof elements
-- Add subtle animations and hover effects
-- Include a professional footer
-- Use modern CSS Grid/Flexbox layouts
-
-Return only the complete HTML code with embedded CSS (no external dependencies).`;
+- Use modern CSS Grid/Flexbox layouts.
+- Return a single, valid HTML file with embedded CSS, and nothing else.
+- All text in English.
+- Focus on conversion optimization with persuasive copy and clear value proposition.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
