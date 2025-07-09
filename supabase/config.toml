@@ -1,1 +1,14 @@
 project_id = "ympfxxxhiippgtioozky"
+
+[auth]
+enabled = true
+external = { providers = ["google", "github"] }
+
+[edge_functions]
+enabled = true
+
+[functions.generate-payment-page]
+verify_jwt = false
+
+[functions.send-preview-email]
+verify_jwt = false

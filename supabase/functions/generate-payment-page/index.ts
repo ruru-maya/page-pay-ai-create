@@ -18,7 +18,7 @@ serve(async (req) => {
   }
 
   try {
-    const { productName, description, price, availability, brandColor, imageUrls = [] } = await req.json();
+    const { productName, description, price, availability, brandColor, imageUrls = [], logoUrl, logoPosition } = await req.json();
 
     console.log('Generating payment page for:', productName);
 
@@ -26,6 +26,9 @@ serve(async (req) => {
     const imageList = imageUrls.length > 0 
       ? imageUrls.map((url, index) => `Image ${index + 1}: ${url}`).join('\n- ')
       : 'no images provided';
+    
+    // Create logo info for prompt
+    const logoInfo = logoUrl ? `Logo URL: ${logoUrl}\nLogo Position: ${logoPosition || 'top-center'}` : 'no logo provided';
 
     // Create OpenAI prompt for generating payment page HTML
     const prompt = `You are a top-tier creative web designer and copywriter specialising in social-media-ready landing pages.
@@ -39,6 +42,7 @@ Generate a visually stunning, mobile-first, SEO-optimized HTML+CSS landing page 
 - Availability: ${availability || 'Available now'}
 - Brand color: ${brandColor}
 - Images: ${imageList}
+- Business Logo: ${logoInfo}
 
 **Requirements:**
 - Divide the landing page into exactly same number as the number of images of separate "frames" or "slides" as if for an Instagram carousel. 
@@ -61,6 +65,14 @@ Generate a visually stunning, mobile-first, SEO-optimized HTML+CSS landing page 
 **Special Instructions:**
 - Make sure each of the slides/frames uses a different photo from the list, with no photo repeated.
 - Do NOT place all photos on a single frame.
+- If a business logo is provided, place it in the specified position using CSS positioning:
+  - top-left: position absolute, top-4, left-4
+  - top-center: position absolute, top-4, left-1/2, transform -translate-x-1/2
+  - top-right: position absolute, top-4, right-4
+  - bottom-left: position absolute, bottom-4, left-4
+  - bottom-center: position absolute, bottom-4, left-1/2, transform -translate-x-1/2
+  - bottom-right: position absolute, bottom-4, right-4
+  The logo should be styled with max-width: 120px, height: auto, and z-index: 10.
 - Make the copy fun, memorable, and tailored for a social-media audience.
 - All text must be in English.
 
