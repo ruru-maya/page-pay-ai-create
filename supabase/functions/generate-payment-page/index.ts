@@ -59,30 +59,20 @@ The page must feature compelling, SEO-optimized, persuasive copy, and a scroll-f
 Inputs:
 
 Product/Service Name: {productName}
-
 Description: {description}
-
 Price: {price}
-
 Availability: {availability}
-
 Brand Color: {brandColor} (hex or css color)
-
 Image: {image} (public URL)
 
 Instructions and Requirements:
 
 1. Visual Design & Branding
 Use a clean, modern design with plenty of white space and brand color ({brandColor}) for highlights, buttons, and accents.
-
 Choose a contemporary, sans-serif font (Inter, Montserrat, or similar).
-
 The layout must be mobile-friendly, fully responsive, and look great on all devices.
-
 Add a visually prominent hero section at the top, using the provided image ({image}) in a creative way (e.g., masked shape, circle, or overlay).
-
 Use soft shadows, rounded corners, and subtle gradients to give the page depth and energy.
-
 If possible, include the brand color as a gradient or background accent.
 
 2. Copywriting & Sections — Enhanced for Engagement and Persuasion
@@ -91,13 +81,12 @@ Write a bold, emotionally charged, eye-catching headline that includes {productN
 The headline should speak directly to the audience’s desires or pain points, promising a benefit or solution that’s impossible to ignore.
 
 Subheadline / Summary:
-Immediately below the headline, add a longer, highly persuasive subheadline or summary (at least 2–3 sentences) using and expanding on {description}.
+Immediately below the headline, add a longer, highly persuasive subheadline or summary (at least 5–6 sentences), describing the product in more details, using engaging copy and storytelling,  using and expanding on {description}.
 This summary should:
 
 Clearly state who the offer is for and why it’s unique.
-
 Highlight how it can transform, improve, or delight the customer’s life.
-
+Address the desired audience.
 Spark curiosity or excitement, using energetic and relatable language.
 
 Benefits & What’s Included:
@@ -105,10 +94,8 @@ Create a prominent, detailed section listing the main benefits, features, and ev
 Use bullet points, icons, or visually separated blocks for clarity.
 For each benefit or feature:
 
-Write a 1–2 sentence description emphasizing why it matters and how it helps the customer.
-
+Write a 5–6 sentence description emphasizing why it matters and how it helps the customer.
 Use lively, conversational copy that feels personal and encouraging.
-
 Go beyond basics—paint a picture of the positive impact and emotional reward.
 
 Price & Availability:
@@ -127,9 +114,13 @@ This should use narrative, storytelling copy (2–3 sentences), focusing on the 
 Optionally, highlight urgency or FOMO (“I almost missed out, but I’m so glad I grabbed this when I did!”).
 
 Footer for Brand Confidence:
-Finish the page with a visually distinct footer.
 Reassure visitors about the brand’s reliability, support, and quality—e.g., “Trusted by thousands of satisfied customers,” or “Questions? Our friendly team is here to help.”
 Keep the tone warm, professional, and confidence-inspiring.
+
+Apply Vivid Money branding footer:
+* Primary color: \`#6A57FF\` (purple)
+* Official Vivid Money logo ([https://brand.vivid.money/logo/logo-icon.svg](https://brand.vivid.money/logo/logo-icon.svg)) in a sticky footer at the bottom with:
+  \`"Powered by Vivid Money"\`
 
 General copywriting rules:
 Make every section engaging, energetic, and customer-focused.
@@ -145,38 +136,18 @@ Make sure the image is displayed at high quality and is responsive.
 Add full SEO meta tags:
 
 Title (with {productName})
-
 Description (from {description}, improved for SEO)
-
 Open Graph & Twitter card tags (for sharing)
-
 Product structured data (JSON-LD)
-
 Embed all CSS within a <style> tag—do not use any external CSS or JS.
-
 The HTML should be 100% valid and ready to use as a standalone landing page.
 
 All text must be in English.
 
 5. Output Instructions
-Output ONLY the complete HTML file with all embedded CSS (no explanations or extra commentary).
+Output ONLY the complete HTML file in the new page with all embedded CSS (no explanations or extra commentary).
 
 All copy should be persuasive, positive, and focused on driving conversions.
-
-INPUTS:
-
-Product/Service Name: {productName}
-
-Description: {description}
-
-Price: {price}
-
-Availability: {availability}
-
-Brand Color: {brandColor}
-
-
-
 
 ### **INPUTS TO USE**
 
@@ -190,17 +161,6 @@ Brand Color: {brandColor}
 
 ---
 
-**Special Instructions:**
-- If a business logo is provided, place it in the specified position using CSS positioning:
-  - top-left: position absolute, top-4, left-4
-  - top-center: position absolute, top-4, left-1/2, transform -translate-x-1/2
-  - top-right: position absolute, top-4, right-4
-  - bottom-left: position absolute, bottom-4, left-4
-  - bottom-center: position absolute, bottom-4, left-1/2, transform -translate-x-1/2
-  - bottom-right: position absolute, bottom-4, right-4
-  The logo should be styled with max-width: 120px, height: auto, and z-index: 10.
-
-Return ONLY the complete HTML (for preview in a new browser window).`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -213,7 +173,7 @@ Return ONLY the complete HTML (for preview in a new browser window).`;
         messages: [
           { 
             role: 'system', 
-            content: 'You are an expert web developer specializing in high-converting payment pages. Create professional, modern HTML with embedded CSS that follows best practices for conversion optimization and user experience.' 
+            content: 'You are an expert web developer specializing in high-converting payment pages. Create professional, modern HTML landing page with embedded CSS that follows best practices for conversion optimization and user experience.' 
           },
           { role: 'user', content: prompt }
         ],
