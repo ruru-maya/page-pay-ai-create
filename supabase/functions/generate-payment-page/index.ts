@@ -231,3 +231,4 @@ All copy should be persuasive, positive, and focused on driving conversions.
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
+});
