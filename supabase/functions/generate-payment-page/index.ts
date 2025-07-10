@@ -85,22 +85,56 @@ Use soft shadows, rounded corners, and subtle gradients to give the page depth a
 
 If possible, include the brand color as a gradient or background accent.
 
-2. Copywriting & Sections
-Write a bold, eye-catching headline (H1) using {productName} that instantly grabs attention.
+2. Copywriting & Sections — Enhanced for Engagement and Persuasion
+Headline (H1):
+Write a bold, emotionally charged, eye-catching headline that includes {productName}.
+The headline should speak directly to the audience’s desires or pain points, promising a benefit or solution that’s impossible to ignore.
 
-Under the headline, add a short, highly persuasive subheadline or summary using {description}.
+Subheadline / Summary:
+Immediately below the headline, add a longer, highly persuasive subheadline or summary (at least 2–3 sentences) using and expanding on {description}.
+This summary should:
 
-Create a clear, benefit-focused section, listing the main features and what’s included—make the copy conversational, energetic, and conversion-oriented.
+Clearly state who the offer is for and why it’s unique.
 
-Clearly show the price and availability, styled attractively but not aggressively.
+Highlight how it can transform, improve, or delight the customer’s life.
 
-Include a strong, clear call-to-action button ("Pay Now" or similar), styled with {brandColor}.
+Spark curiosity or excitement, using energetic and relatable language.
 
-The button should be noticeable but not overpowering.
+Benefits & What’s Included:
+Create a prominent, detailed section listing the main benefits, features, and everything that’s included.
+Use bullet points, icons, or visually separated blocks for clarity.
+For each benefit or feature:
 
-Optionally, add a testimonial or short “Why buy now?” section to build trust and FOMO.
+Write a 1–2 sentence description emphasizing why it matters and how it helps the customer.
 
-End with a sticky or visually separated footer for brand confidence.
+Use lively, conversational copy that feels personal and encouraging.
+
+Go beyond basics—paint a picture of the positive impact and emotional reward.
+
+Price & Availability:
+Clearly present the price and availability (e.g., “Only 5 left!” or “Special price until {date}”), using friendly, attractive styling.
+Instead of just stating numbers, explain the value—why this offer is worth the investment, how much customers save, or what they risk missing if they wait.
+Frame the pricing in a positive, inviting tone.
+
+Call to Action (CTA):
+Place a strong, clear call-to-action button (e.g., “Pay Now”, “Get Started”, or “Secure My Spot”) styled in {brandColor}.
+Above or below the button, add a persuasive line or microcopy explaining what happens next (e.g., “Checkout is 100% secure and only takes a minute!” or “Don’t miss out—secure your offer today!”).
+The button should be highly visible but harmoniously blended into the overall design, avoiding aggressive or pushy tactics.
+
+Social Proof / Testimonial (“Why buy now?”):
+Add a compelling, authentic-sounding testimonial from a happy customer, or a “Why buy now?” section.
+This should use narrative, storytelling copy (2–3 sentences), focusing on the relief, excitement, or results experienced.
+Optionally, highlight urgency or FOMO (“I almost missed out, but I’m so glad I grabbed this when I did!”).
+
+Footer for Brand Confidence:
+Finish the page with a visually distinct footer.
+Reassure visitors about the brand’s reliability, support, and quality—e.g., “Trusted by thousands of satisfied customers,” or “Questions? Our friendly team is here to help.”
+Keep the tone warm, professional, and confidence-inspiring.
+
+General copywriting rules:
+Make every section engaging, energetic, and customer-focused.
+Use more words and storytelling to create an emotional connection and answer objections before they arise.
+Write as if speaking directly to one person, using “you” language and inviting action.
 
 3. Image Use
 Use the input image ({image}) creatively—display it in a main hero section and/or again in a secondary, dynamic layout (e.g., as a circular photo, blob shape, or as part of a card).
