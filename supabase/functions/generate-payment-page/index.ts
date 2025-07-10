@@ -33,8 +33,6 @@ serve(async (req) => {
     // Create OpenAI prompt for generating payment page HTML
     const prompt = `## **Phased Instructions for AI Landing Page Generation**
 
----
-
 ### **Phase 1: Initial Page Setup & Branding**
 
 **Step 1.**
@@ -47,71 +45,65 @@ Apply Vivid Money branding throughout:
 * Primary color: \`#6A57FF\` (purple)
 * Secondary color: \`#00DAB5\` (turquoise)
 * Modern, clean sans-serif font (Inter, Montserrat, or similar)
-* Predominantly white background, color highlights, and accents
+* Predominantly white background, with color highlights, gradients, and accents
 * Official Vivid Money logo ([https://brand.vivid.money/logo/logo-icon.svg](https://brand.vivid.money/logo/logo-icon.svg)) in a sticky footer at the bottom with:
   \`"Powered by Vivid Money"\`
 
----
-
-### **Phase 2: Visual Structure & Layout (Carousel Concept)**
+### **Phase 2: Visual Structure & Layout (Landing Page)**
 
 **Step 3.**
-Divide the landing page into **exactly 3 visually distinct "frames" or "slides"**, each designed to work as a shareable Instagram carousel slide or a unified responsive web landing page.
-Each frame should be styled as a modern card/section, with ample white space, soft shadows, and rounded corners.
+Organize the landing page into 3–5 visually distinct, scrollable sections, each styled as a modern card/section, with ample white space, soft shadows, and rounded corners.
 
 **Step 4.**
-For each slide:
+Design the landing page sections as follows:
 
-* **Frame 1: Hero & Headline**
-
-  * Use the first image from \`{imageUrls}\` as a hero image, creatively shaped (circle, blob, or other dynamic mask).
-  * Write a bold, persuasive headline (H1) to spark instant desire for the offer.
+* **Section 1: Hero & Headline**
+  * Use the first image from \`{imageUrls}\` as a hero image, creatively shaped (circle, blob, or another dynamic mask).
+  * Write a bold, persuasive headline (H1) to instantly attract attention and create desire for the offer.
   * Add a supporting subheadline or microcopy.
-* **Frame 2: Features & Benefits**
 
-  * Use the second image, styled in a different shape (rounded rectangle, slanted mask, or overlay).
-  * Present the product/service features, benefits, and inclusions using creative layout—icons, split text, columns, etc.
+* **Section 2: Features & Benefits**
+  * Use the second image, styled in a unique shape (rounded rectangle, slanted mask, or overlay).
+  * Present the product/service features, benefits, and inclusions using creative layout—icons, split text, columns, or checkmarks if helpful.
   * Copy should be energetic, social-friendly, and benefit-focused.
-* **Frame 3: Social Proof, Price, and CTA**
 
-  * Use the third image, uniquely styled (e.g., rotated, masked, or with testimonial overlay).
-  * Display the price and availability attractively, not aggressively.
-  * Add at least one persuasive testimonial in a styled speech bubble or card.
-  * Place a **"Pay Now"** CTA button, matching Vivid Money's palette, elegant but not overwhelming.
+* **Section 3: Social Proof & Testimonial**
+  * If a third image is available, display it here in a creative way (e.g., with testimonial overlay or masked shape).
+  * Add at least one persuasive, authentic-sounding testimonial in a styled speech bubble or card.
+
+* **Section 4: Price, Availability, and CTA**
+  * Highlight the price and availability attractively, not aggressively.
+  * Place a "Pay Now" CTA button (link: {pay_link}), matching Vivid Money's palette, elegant but not overwhelming.
 
 **Step 5.**
-Each slide must feature **only one unique photo** from the \`{imageUrls}\` (no repeats, no combining).
-
----
+Each section should use only one unique photo from \`{imageUrls}\` (if there are fewer than four, distribute images as best fits the content; no photo should repeat).
 
 ### **Phase 3: Persuasive Copywriting & Social-Ready Design**
 
 **Step 6.**
-
 * All copy must be highly persuasive, fun, energetic, and conversational—short impactful sentences and microcopy for social media.
-* Every slide should be designed to look great as a standalone Instagram carousel image or as part of the full landing page.
+* Each section should balance text and visuals for an engaging, shareable, and scroll-friendly experience.
 
 **Step 7.**
-
 * Use modern typography, color contrast, and harmonious layouts (no clutter, no overwhelming elements).
-
----
 
 ### **Phase 4: Technical & Presentation Requirements**
 
 **Step 8.**
-
 * Add standard SEO meta tags: title, meta description, Open Graph, Twitter card, and product structured data.
 * Ensure the page is fully responsive and mobile-first (flex, grid, media queries).
 * Embed all CSS in the \`<style>\` tag inside the HTML file.
 
 **Step 9.**
-
+* Do NOT output the HTML file as text:
 * Present the HTML so it can be rendered in a new browser window for user preview.
-* Each frame must be individually exportable as an Instagram carousel image.
-* No photo may appear in more than one frame.
-* All content must be in English.
-* The "Pay Now" button must be visually present but not overpowering.
+* Additionally, generate a separate section with engaging, Instagram-ready post copy—a short, catchy text summarizing the offer, ending with a call-to-action and the payment link ({pay_link}).
+* Output both the HTML code (for preview) and the Instagram post copy + link, clearly separated.
+
+### **Special Instructions**
+* No image may appear in more than one section.
+* All content (HTML and Instagram copy) must be in English.
+* The "Pay Now" button must link to {pay_link} and be visually present but not overpowering.
 
 ---
 
