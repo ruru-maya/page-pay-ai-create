@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ interface FormData {
 }
 
 export default function PaymentPageGenerator() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     productName: "",
     description: "",
@@ -30,11 +32,11 @@ export default function PaymentPageGenerator() {
   });
   
   const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedHtml, setGeneratedHtml] = useState<string>("");
   const [step, setStep] = useState(1);
   const [userEmail, setUserEmail] = useState('');
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [generatedPageId, setGeneratedPageId] = useState<string>("");
   const { toast } = useToast();
 
   const handleInputChange = (field: keyof FormData, value: string) => {
@@ -114,7 +116,25 @@ export default function PaymentPageGenerator() {
         throw new Error(data.error || 'Failed to generate payment page');
       }
       
-      setGeneratedHtml(data.generatedHtml);
+      // Save the generated page to database
+      const { data: savedPage, error: saveError } = await supabase
+        .from('payment_pages')
+        .insert({
+          product_name: formData.productName,
+          description: formData.description,
+          price: parseFloat(formData.price),
+          availability: formData.availability,
+          brand_color: formData.brandColor,
+          generated_html: data.generatedHtml,
+        })
+        .select()
+        .single();
+
+      if (saveError) {
+        throw new Error('Failed to save payment page');
+      }
+
+      setGeneratedPageId(savedPage.id);
       setStep(3);
       
       toast({
@@ -134,14 +154,14 @@ export default function PaymentPageGenerator() {
 
 
   const handleSendEmail = async () => {
-    if (!userEmail || !generatedHtml) return;
+    if (!userEmail || !generatedPageId) return;
 
     setIsSendingEmail(true);
     try {
       const { error } = await supabase.functions.invoke('send-preview-email', {
         body: {
           email: userEmail,
-          html: generatedHtml,
+          pageId: generatedPageId,
           productName: formData.productName,
         },
       });
@@ -153,7 +173,7 @@ export default function PaymentPageGenerator() {
       setEmailSent(true);
       toast({
         title: "Preview sent!",
-        description: "Check your inbox for the payment page preview."
+        description: "Check your inbox for the payment page preview link."
       });
     } catch (error) {
       console.error('Email send error:', error);
@@ -336,7 +356,7 @@ export default function PaymentPageGenerator() {
           <div className="mx-auto w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center mb-4">
             <Eye className="w-6 h-6 text-primary-foreground" />
           </div>
-          <CardTitle className="text-2xl">Preview & Deploy</CardTitle>
+          <CardTitle className="text-2xl">Preview & Share</CardTitle>
           <CardDescription>Your AI-generated payment page is ready!</CardDescription>
         </CardHeader>
         <CardContent>
@@ -344,9 +364,16 @@ export default function PaymentPageGenerator() {
             <Button onClick={() => setStep(1)} variant="outline" className="flex-1">
               Edit Details
             </Button>
-            <Button onClick={() => setStep(4)} className="flex-1 bg-gradient-primary hover:shadow-glow transition-all duration-300">
+            <Button 
+              onClick={() => navigate(`/preview?id=${generatedPageId}`)}
+              className="flex-1 bg-gradient-primary hover:shadow-glow transition-all duration-300"
+            >
+              <Eye className="w-4 h-4 mr-2" />
+              View Preview
+            </Button>
+            <Button onClick={() => setStep(4)} className="flex-1 bg-accent hover:bg-accent/90 transition-all duration-300">
               <Mail className="w-4 h-4 mr-2" />
-              Send Preview
+              Share via Email
             </Button>
           </div>
         </CardContent>
@@ -354,15 +381,16 @@ export default function PaymentPageGenerator() {
 
       <Card className="bg-gradient-card border-0 shadow-elegant">
         <CardHeader>
-          <CardTitle className="text-lg">Generated Payment Page</CardTitle>
+          <CardTitle className="text-lg">Quick Actions</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="bg-secondary/20 rounded-lg p-4 max-h-96 overflow-auto">
-            <iframe
-              srcDoc={generatedHtml}
-              className="w-full h-96 border-0 rounded"
-              title="Payment Page Preview"
-            />
+          <div className="text-center space-y-4">
+            <p className="text-muted-foreground">
+              Your payment page for <strong>{formData.productName}</strong> has been generated successfully!
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Click "View Preview" to see your page in full screen or "Share via Email" to send the link to someone.
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -376,11 +404,11 @@ export default function PaymentPageGenerator() {
         <div className="mx-auto w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center mb-4">
           <Mail className="w-6 h-6 text-primary-foreground" />
         </div>
-        <CardTitle className="text-2xl">Get Your Preview</CardTitle>
+        <CardTitle className="text-2xl">Share Your Preview</CardTitle>
         <CardDescription>
           {emailSent 
-            ? "Preview sent successfully!" 
-            : "If you're satisfied with the preview, enter your email to receive a copy of your landing page."}
+            ? "Preview link sent successfully!" 
+            : "Enter an email to share your payment page preview link."}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -419,7 +447,7 @@ export default function PaymentPageGenerator() {
                 ) : (
                   <>
                     <Mail className="w-4 h-4 mr-2" />
-                    Send Preview
+                    Send Preview Link
                   </>
                 )}
               </Button>
