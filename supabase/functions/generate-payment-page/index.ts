@@ -51,61 +51,98 @@ Apply Vivid Money branding throughout:
 
 ### **Phase 2: Visual Structure & Layout (Landing Page)**
 
-**Step 3.**
-Organize the landing page into 3–5 visually distinct, scrollable sections, each styled as a modern card/section, with ample white space, soft shadows, and rounded corners.
+You are an elite web designer and conversion copywriter.
 
-**Step 4.**
-Design the landing page sections as follows:
+Your task:
+Generate a modern, visually stunning, mobile-first HTML landing page with embedded CSS.
+The page must feature compelling, SEO-optimized, persuasive copy, and a scroll-friendly, highly engaging layout.
+Inputs:
 
-* **Section 1: Hero & Headline**
-  * Use the first image from \`{imageUrls}\` as a hero image, creatively shaped (circle, blob, or another dynamic mask).
-  * Write a bold, persuasive headline (H1) to instantly attract attention and create desire for the offer.
-  * Add a supporting subheadline or microcopy.
+Product/Service Name: {productName}
 
-* **Section 2: Features & Benefits**
-  * Use the second image, styled in a unique shape (rounded rectangle, slanted mask, or overlay).
-  * Present the product/service features, benefits, and inclusions using creative layout—icons, split text, columns, or checkmarks if helpful.
-  * Copy should be energetic, social-friendly, and benefit-focused.
+Description: {description}
 
-* **Section 3: Social Proof & Testimonial**
-  * If a third image is available, display it here in a creative way (e.g., with testimonial overlay or masked shape).
-  * Add at least one persuasive, authentic-sounding testimonial in a styled speech bubble or card.
+Price: {price}
 
-* **Section 4: Price, Availability, and CTA**
-  * Highlight the price and availability attractively, not aggressively.
-  * Place a "Pay Now" CTA button (link: {pay_link}), matching Vivid Money's palette, elegant but not overwhelming.
+Availability: {availability}
 
-**Step 5.**
-Each section should use only one unique photo from \`{imageUrls}\` (if there are fewer than four, distribute images as best fits the content; no photo should repeat).
+Brand Color: {brandColor} (hex or css color)
 
-### **Phase 3: Persuasive Copywriting & Social-Ready Design**
+Image: {image} (public URL)
 
-**Step 6.**
-* All copy must be highly persuasive, fun, energetic, and conversational—short impactful sentences and microcopy for social media.
-* Each section should balance text and visuals for an engaging, shareable, and scroll-friendly experience.
+Instructions and Requirements:
 
-**Step 7.**
-* Use modern typography, color contrast, and harmonious layouts (no clutter, no overwhelming elements).
+1. Visual Design & Branding
+Use a clean, modern design with plenty of white space and brand color ({brandColor}) for highlights, buttons, and accents.
 
-### **Phase 4: Technical & Presentation Requirements**
+Choose a contemporary, sans-serif font (Inter, Montserrat, or similar).
 
-**Step 8.**
-* Add standard SEO meta tags: title, meta description, Open Graph, Twitter card, and product structured data.
-* Ensure the page is fully responsive and mobile-first (flex, grid, media queries).
-* Embed all CSS in the \`<style>\` tag inside the HTML file.
+The layout must be mobile-friendly, fully responsive, and look great on all devices.
 
-**Step 9.**
-* Do NOT output the HTML file as text:
-* Present the HTML so it can be rendered in a new browser window for user preview.
-* Additionally, generate a separate section with engaging, Instagram-ready post copy—a short, catchy text summarizing the offer, ending with a call-to-action and the payment link ({pay_link}).
-* Output both the HTML code (for preview) and the Instagram post copy + link, clearly separated.
+Add a visually prominent hero section at the top, using the provided image ({image}) in a creative way (e.g., masked shape, circle, or overlay).
 
-### **Special Instructions**
-* No image may appear in more than one section.
-* All content (HTML and Instagram copy) must be in English.
-* The "Pay Now" button must link to {pay_link} and be visually present but not overpowering.
+Use soft shadows, rounded corners, and subtle gradients to give the page depth and energy.
 
----
+If possible, include the brand color as a gradient or background accent.
+
+2. Copywriting & Sections
+Write a bold, eye-catching headline (H1) using {productName} that instantly grabs attention.
+
+Under the headline, add a short, highly persuasive subheadline or summary using {description}.
+
+Create a clear, benefit-focused section, listing the main features and what’s included—make the copy conversational, energetic, and conversion-oriented.
+
+Clearly show the price and availability, styled attractively but not aggressively.
+
+Include a strong, clear call-to-action button ("Pay Now" or similar), styled with {brandColor}.
+
+The button should be noticeable but not overpowering.
+
+Optionally, add a testimonial or short “Why buy now?” section to build trust and FOMO.
+
+End with a sticky or visually separated footer for brand confidence.
+
+3. Image Use
+Use the input image ({image}) creatively—display it in a main hero section and/or again in a secondary, dynamic layout (e.g., as a circular photo, blob shape, or as part of a card).
+
+Make sure the image is displayed at high quality and is responsive.
+
+4. SEO & Technical
+Add full SEO meta tags:
+
+Title (with {productName})
+
+Description (from {description}, improved for SEO)
+
+Open Graph & Twitter card tags (for sharing)
+
+Product structured data (JSON-LD)
+
+Embed all CSS within a <style> tag—do not use any external CSS or JS.
+
+The HTML should be 100% valid and ready to use as a standalone landing page.
+
+All text must be in English.
+
+5. Output Instructions
+Output ONLY the complete HTML file with all embedded CSS (no explanations or extra commentary).
+
+All copy should be persuasive, positive, and focused on driving conversions.
+
+INPUTS:
+
+Product/Service Name: {productName}
+
+Description: {description}
+
+Price: {price}
+
+Availability: {availability}
+
+Brand Color: {brandColor}
+
+
+
 
 ### **INPUTS TO USE**
 
