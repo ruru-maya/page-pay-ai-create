@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Upload, Sparkles, Eye, Download, Palette, DollarSign, Package, Clock, ImageIcon, Mail, CheckCircle } from "lucide-react";
+import { Upload, Sparkles, Eye, Palette, DollarSign, Package, Clock, ImageIcon, Mail, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface FormData {
@@ -166,27 +166,6 @@ export default function PaymentPageGenerator() {
     setIsSendingEmail(false);
   };
 
-  const handleDeploy = () => {
-    if (!generatedHtml) return;
-
-    // Create a new window and write the HTML content
-    const newWindow = window.open('', '_blank', 'width=1200,height=800');
-    if (newWindow) {
-      newWindow.document.write(generatedHtml);
-      newWindow.document.close();
-      
-      toast({
-        title: "Deployed Successfully!",
-        description: "Your payment page has been opened in a new window"
-      });
-    } else {
-      toast({
-        title: "Popup Blocked",
-        description: "Please allow popups for this site and try again",
-        variant: "destructive"
-      });
-    }
-  };
 
   const renderStep1 = () => (
     <Card className="bg-gradient-card border-0 shadow-elegant">
@@ -369,10 +348,6 @@ export default function PaymentPageGenerator() {
               <Mail className="w-4 h-4 mr-2" />
               Send Preview
             </Button>
-            <Button onClick={handleDeploy} className="flex-1 bg-accent hover:bg-accent/90 transition-all duration-300">
-              <Download className="w-4 h-4 mr-2" />
-              Deploy in New Window
-            </Button>
           </div>
         </CardContent>
       </Card>
@@ -469,13 +444,6 @@ export default function PaymentPageGenerator() {
                 className="flex-1"
               >
                 Create Another
-              </Button>
-              <Button 
-                onClick={handleDeploy}
-                className="flex-1 bg-gradient-primary hover:shadow-glow transition-all duration-300"
-              >
-                <Download className="w-4 h-4 mr-2" />
-                Deploy Payment Link
               </Button>
             </div>
           </div>
