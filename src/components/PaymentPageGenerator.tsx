@@ -254,10 +254,25 @@ export default function PaymentPageGenerator() {
   };
 
   const handleDeploy = () => {
-    toast({
-      title: "Deploying...",
-      description: "Your payment page is being deployed as a payment link"
-    });
+    if (!generatedHtml) return;
+
+    // Create a new window and write the HTML content
+    const newWindow = window.open('', '_blank', 'width=1200,height=800');
+    if (newWindow) {
+      newWindow.document.write(generatedHtml);
+      newWindow.document.close();
+      
+      toast({
+        title: "Deployed Successfully!",
+        description: "Your payment page has been opened in a new window"
+      });
+    } else {
+      toast({
+        title: "Popup Blocked",
+        description: "Please allow popups for this site and try again",
+        variant: "destructive"
+      });
+    }
   };
 
   const renderStep1 = () => (
@@ -440,6 +455,10 @@ export default function PaymentPageGenerator() {
             <Button onClick={() => setStep(4)} className="flex-1 bg-gradient-primary hover:shadow-glow transition-all duration-300">
               <ImageIcon className="w-4 h-4 mr-2" />
               Add Logo
+            </Button>
+            <Button onClick={handleDeploy} className="flex-1 bg-accent hover:bg-accent/90 transition-all duration-300">
+              <Download className="w-4 h-4 mr-2" />
+              Deploy in New Window
             </Button>
           </div>
         </CardContent>
