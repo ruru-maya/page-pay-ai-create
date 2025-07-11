@@ -27,181 +27,91 @@ serve(async (req) => {
       ? imageUrls.map((url, index) => `Image ${index + 1}: ${url}`).join('\n- ')
       : 'no images provided';
     
-    // Create logo info for prompt
-    const logoInfo = logoUrl ? `Logo URL: ${logoUrl}\nLogo Position: ${logoPosition || 'top-center'}` : 'no logo provided';
-
     // Create OpenAI prompt for generating payment page HTML
-    const prompt = `## **Phased Instructions for AI Landing Page Generation**
+    const prompt = `You are an award-winning UX/UI designer, conversion copywriter, and front-end developer with deep SEO, accessibility (WCAG 2.1), and analytics expertise. Your mission is to transform minimal inputs into a full landing page blueprint that tells a rich brand story and maximizes sign-ups/sales.
 
-### **Phase 1: Initial Page Setup & Branding**
+--- Inputs (must use only these) ---
+• Product/Service Name: ${productName}
+• Description: ${description || 'Premium product'}
+• Price: $${price}
+• Availability: ${availability || 'Available now'}
+• Brand Color: ${brandColor} (hex or CSS variable)
+• Image URL: ${imageList}
 
-**Step 1.**
-Set up a complete HTML5 landing page with embedded CSS (no external assets or JS).
-Use mobile-first, responsive layout principles.
+--- Deliverables ---
 
-**Step 2.**
-Apply Vivid Money branding throughout:
+1️⃣ Meta & Header  
+• SEO-optimized \`<title>\` and \`<meta name="description">\` (≤ 160 chars) that weave in top keyword ideas drawn from the description.  
+• Open Graph (\`og:*\`) and Twitter Card tags with optimized titles, descriptions, and your image URL.  
+• A simple JSON-LD schema snippet (\`Product\`, \`Offer\`) referencing the product name, price, availability, and image.
 
-* Primary color: \`#6A57FF\` (purple)
-* Secondary color: \`#00DAB5\` (turquoise)
-* Modern, clean sans-serif font (Inter, Montserrat, or similar)
-* Predominantly white background, with color highlights, gradients, and accents
-* Official Vivid Money logo ([https://brand.vivid.money/logo/logo-icon.svg](https://brand.vivid.money/logo/logo-icon.svg)) in a sticky footer at the bottom with:
-  \`"Powered by Vivid Money"\`
+2️⃣ Hero Section  
+• Headline (H1) that taps into your audience's core desire or pain, featuring a "hero narrative" (1–2 sentences) that sets the scene.  
+• Subheadline (H2) with a mini-story arc (Problem → Epiphany → Solution).  
+• Full-bleed hero image using the provided image: include ideal aspect ratio, suggested \`srcset\` for retina and mobile, and lazy-load attributes.  
+• Primary CTA button text (e.g. "Start My Journey," "Claim Product Now") with micro-copy beneath (e.g. "No credit card required"). Style rules:  
+  - Background: ${brandColor};  
+  - Font-size: 1.25rem;  
+  - Padding: 0.75rem 1.5rem;  
+  - Border-radius: 8px;  
+  - Hover: 10% darker shade;  
+  - Focus: outline with 3px solid high-contrast.
 
-### **Phase 2: Visual Structure & Layout (Landing Page)**
+3️⃣ Story-Driven Features & Benefits  
+• Three to six "feature cards," each with:  
+  - A 1-sentence "dramatic moment" story that shows transformation;  
+  - Benefit-focused headline;  
+  - Two-line body copy;  
+  - Icon/image suggestion (120×120 px SVG or PNG).  
+• Layout: 2-column grid on desktop, 1-col on mobile, 32px gutter.  
+• Subtle entrance animations (fade-up, 200ms delay between cards).
 
-You are an elite web designer and conversion copywriter.
+4️⃣ Social Proof & Trust Builders  
+• Three scroll-stopping testimonials: name, title/role, 2-sentence story of "before vs. after."  
+• Star rating component (5-star SVG) with microdata (\`itemprop="reviewRating"\`).  
+• "As featured in" bar: list 3 reputable outlets (use placeholder logos + real alt text).  
+• Trust badge row: SSL-secure, money-back guarantee, free support icons.
 
-Your task:
-Generate a modern, visually stunning, mobile-first HTML landing page with embedded CSS.
-The page must feature compelling, SEO-optimized, persuasive copy, and a scroll-friendly, highly engaging layout.
-Inputs:
+5️⃣ Pricing & Packages  
+• Clear, responsive pricing table: single offer or 2-tier split (e.g. Standard vs. Premium).  
+• Use the price in a prominent font (2rem).  
+• Bulleted "What's included" list—tie each bullet back to the core story.  
+• Secondary CTA ("Choose Plan") styled in the brand color with subtle box-shadow.  
+• Section header telling a micro-anecdote about how customers used their purchase.
 
-Product/Service Name: {productName}
+6️⃣ Urgency & Scarcity  
+• Line of dynamic text for availability ("Only X spots left!").  
+• Countdown timer snippet (JS pseudo-code) set to a realistic deadline (e.g. 72 hours from page load).  
+• Suggest an exit-intent popup with last-chance offer (10% off coupon).
 
-Description: {description}
+7️⃣ FAQ & Objection Handling  
+• Five FAQ items that neutralize top objections (price, ease of use, support, results, guarantees).  
+• Accordion markup (\`<details>\`/\`<summary>\`) with ARIA attributes for screen readers.
 
-Price: {price}
+8️⃣ Footer & Legal  
+• Compact footer with links: Privacy Policy, Terms of Service, Returns, Contact.  
+• Social follow icons with \`aria-label\`.  
+• Small print about data privacy (GDPR, CCPA compliance).
 
-Availability: {availability}
+9️⃣ Analytics & Optimization  
+• Include snippet placement for Google Analytics (or GA4), Facebook Pixel, and a custom "conversion" event on CTA click.  
+• JavaScript pseudo-code for A/B testing headline variants and recording metrics.  
+• Performance tips: compress images, minify CSS/JS, preload key assets.
 
-Brand Color: {brandColor} (hex or css color)
+🔟 Responsive & Accessibility  
+• Mobile first breakpoints: 320px, 480px, 768px, 1024px, 1280px.  
+• Ensure 4.5:1 contrast ratio for text against backgrounds (check with brand color).  
+• Include skip-nav link (\`<a href="#main-content">Skip to content</a>\`).  
+• Use semantic HTML5: \`<header>\`, \`<main id="main-content">\`, \`<section>\`, \`<aside>\`, \`<footer>\`.  
 
-Image: {image} (public URL)
+--- Output Format ---  
+• For each section, start with a 2–3 sentence rationale explaining how it drives conversions through storytelling, FOMO, social proof, or usability.  
+• Supply ready-to-use HTML snippets (with placeholders replaced by your generated copy) and accompanying CSS rules (using the brand color).  
+• Provide JSON-LD, microdata, and JS pseudo-code where specified.  
+• List any additional image or icon assets you'd source (with alt-text and ideal specs).  
+• Conclude with a brief launch checklist: SEO, performance, analytics, A/B test plan.
 
-Instructions and Requirements:
-
-1. Visual Design & Branding
-Use a clean, modern design with plenty of white space and brand color ({brandColor}) for highlights, buttons, and accents.
-
-Choose a contemporary, sans-serif font (Inter, Montserrat, or similar).
-
-The layout must be mobile-friendly, fully responsive, and look great on all devices.
-
-Add a visually prominent hero section at the top, using the provided image ({image}) in a creative way (e.g., masked shape, circle, or overlay).
-
-Use soft shadows, rounded corners, and subtle gradients to give the page depth and energy.
-
-If possible, include the brand color as a gradient or background accent.
-
-2. Copywriting & Sections — Enhanced for Engagement and Persuasion
-Headline (H1):
-Write a bold, emotionally charged, eye-catching headline that includes {productName}.
-The headline should speak directly to the audience’s desires or pain points, promising a benefit or solution that’s impossible to ignore.
-
-Subheadline / Summary(H2):
-Immediately below the headline, add a longer, highly persuasive subheadline or summary (at least 5–6 sentences) using and expanding on {description}.
-This subheadline should:
-
-Clearly state who the offer is for and why it’s unique.
-
-Highlight how it can transform, improve, or delight the customer’s life.
-
-Spark curiosity or excitement, using energetic and relatable language.
-
-Benefits & What’s Included(H3):
-Create a prominent, detailed section listing the main benefits, features, and everything that’s included.
-Use storytelling, descriptive and engaging sentences, or visually separated blocks for clarity.
-List at least 3 benefits or features.
-For each benefit or feature:
-
-Write a 2–3 sentence description emphasizing why it matters and how it helps the customer.
-
-Use lively, conversational copy that feels personal and encouraging.
-
-Go beyond basics—paint a picture of the positive impact and emotional reward.
-
-Price & Availability:
-Clearly present the price and availability (e.g., “Only 5 left!” or “Special price until {date}”), using friendly, attractive styling.
-Instead of just stating numbers, explain the value—why this offer is worth the investment, how much customers save, or what they risk missing if they wait.
-Frame the pricing in a positive, inviting tone.
-
-Call to Action (CTA):
-Place a strong, clear call-to-action button (e.g., “Pay Now”, “Get Started”, or “Secure My Spot”) styled in {brandColor}.
-Above or below the button, add a persuasive line or microcopy explaining what happens next (e.g., “Checkout is 100% secure and only takes a minute!” or “Don’t miss out—secure your offer today!”).
-The button should be highly visible but harmoniously blended into the overall design, avoiding aggressive or pushy tactics.
-
-Social Proof / Testimonial (“Why buy now?”):
-Add a compelling, authentic-sounding testimonial from a happy customer, or a “Why buy now?” section.
-This should use narrative, storytelling copy (2–3 sentences), focusing on the relief, excitement, or results experienced.
-Optionally, highlight urgency or FOMO (“I almost missed out, but I’m so glad I grabbed this when I did!”).
-
-Footer for Brand Confidence:
-Finish the page with a visually distinct footer.
-Reassure visitors about the brand’s reliability, support, and quality—e.g., “Trusted by thousands of satisfied customers,” or “Questions? Our friendly team is here to help.”
-Keep the tone warm, professional, and confidence-inspiring.
-
-General copywriting rules:
-Make every section engaging, energetic, and customer-focused.
-Use more words and storytelling to create an emotional connection and answer objections before they arise.
-Write as if speaking directly to one person, using “you” language and inviting action.
-
-3. Image Use
-Use the input image ({image}) creatively—display it in a main hero section and/or again in a secondary, dynamic layout (e.g., as a circular photo, blob shape, or as part of a card).
-
-Make sure the image is displayed at high quality and is responsive.
-
-4. SEO & Technical
-Add full SEO meta tags:
-
-Title (with {productName})
-
-Description (from {description}, improved for SEO)
-
-Open Graph & Twitter card tags (for sharing)
-
-Product structured data (JSON-LD)
-
-Embed all CSS within a <style> tag—do not use any external CSS or JS.
-
-The HTML should be 100% valid and ready to use as a standalone landing page.
-
-All text must be in English.
-
-5. Output Instructions
-Output ONLY the complete HTML file with all embedded CSS (no explanations or extra commentary).
-
-All copy should be persuasive, positive, and focused on driving conversions.
-
-INPUTS:
-
-Product/Service Name: {productName}
-
-Description: {description}
-
-Price: {price}
-
-Availability: {availability}
-
-Brand Color: {brandColor}
-
-
-
-
-### **INPUTS TO USE**
-
-* Product/service name: \`${productName}\`
-* Description: \`${description || 'Premium product'}\`
-* Price: \`$${price}\`
-* Availability: \`${availability || 'Available now'}\`
-* Brand color: \`${brandColor}\`
-* Images: \`${imageList}\`
-* Business Logo: \`${logoInfo}\`
-
----
-
-**Special Instructions:**
-- If a business logo is provided, place it in the specified position using CSS positioning:
-  - top-left: position absolute, top-4, left-4
-  - top-center: position absolute, top-4, left-1/2, transform -translate-x-1/2
-  - top-right: position absolute, top-4, right-4
-  - bottom-left: position absolute, bottom-4, left-4
-  - bottom-center: position absolute, bottom-4, left-1/2, transform -translate-x-1/2
-  - bottom-right: position absolute, bottom-4, right-4
-  The logo should be styled with max-width: 120px, height: auto, and z-index: 10.
-
-Return ONLY the complete HTML (for preview in a new browser window).`;
+Return ONLY the complete HTML file with all embedded CSS (no explanations or extra commentary).`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
