@@ -27,6 +27,14 @@ serve(async (req) => {
       ? imageUrls.map((url, index) => `Image ${index + 1}: ${url}`).join('\n- ')
       : 'no images provided';
     
+    const imageInstructions = imageUrls.length > 0 
+      ? `You MUST use ALL ${imageUrls.length} provided images throughout the payment page. Distribute them strategically:
+- Use the first image as the main hero image
+- Use additional images in the features section, testimonials, or product showcase
+- Create an image gallery if multiple product images are provided
+- Ensure every uploaded image is visible and adds value to the conversion story`
+      : 'Use placeholder images or create a visually appealing page without images';
+    
     // Create OpenAI prompt for generating payment page HTML
     const prompt = `You are an award-winning UX/UI designer, conversion copywriter, and front-end developer with deep SEO, accessibility (WCAG 2.1), and analytics expertise. Your mission is to transform minimal inputs into a full landing page blueprint that tells a rich brand story and maximizes sign-ups/sales.
 
@@ -36,7 +44,10 @@ serve(async (req) => {
 • Price: $${price}
 • Availability: ${availability || 'Available now'}
 • Brand Color: ${brandColor} (hex or CSS variable)
-• Image URL: ${imageList}
+• Image URLs: ${imageList}
+
+--- CRITICAL IMAGE USAGE REQUIREMENTS ---
+${imageInstructions}
 
 --- Deliverables ---
 
