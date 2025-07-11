@@ -36,19 +36,34 @@ serve(async (req) => {
       : 'Use placeholder images or create a visually appealing page without images';
     
     // Create OpenAI prompt for generating payment page HTML
-    const prompt = `You are an award-winning UX/UI designer, conversion copywriter, and front-end developer with deep SEO, accessibility (WCAG 2.1), and analytics expertise. Your mission is to transform minimal inputs into a full landing page blueprint that tells a rich brand story and maximizes sign-ups/sales.
+    const prompt = `You are an expert web developer creating a complete, professional HTML payment page. You MUST include ALL provided images and ensure icons/graphics are properly embedded.
 
---- Inputs (must use only these) ---
-• Product/Service Name: ${productName}
+CRITICAL REQUIREMENTS:
+1. Use ALL provided image URLs in the HTML: ${imageList}
+2. Embed SVG icons directly in the HTML (no external icon fonts)
+3. Create a complete, self-contained HTML file with embedded CSS
+4. Make the page visually stunning and conversion-optimized
+
+PRODUCT DETAILS:
+• Product: ${productName}
 • Description: ${description || 'Premium product'}
 • Price: ${price} ${currency || 'USD'}
-• Currency: ${currency || 'USD'}
 • Availability: ${availability || 'Available now'}
-• Brand Color: ${brandColor} (hex or CSS variable)
-• Image URLs: ${imageList}
+• Brand Color: ${brandColor}
 
---- CRITICAL IMAGE USAGE REQUIREMENTS ---
 ${imageInstructions}
+
+MANDATORY IMAGE INTEGRATION:
+- Use the first image as the hero/main product image with proper alt text
+- Include ALL other images in product gallery, features, or testimonials
+- Ensure images are properly sized and responsive
+- Add loading="lazy" to all images except the hero image
+
+ICON REQUIREMENTS:
+- Use inline SVG icons (NO external libraries like Font Awesome)
+- Include icons for: features, testimonials, trust badges, social proof
+- Create custom SVG icons that match the brand color
+- Ensure all icons are accessible with proper aria-labels
 
 --- Deliverables ---
 
@@ -132,16 +147,16 @@ Return ONLY the complete HTML file with all embedded CSS (no explanations or ext
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4o',
         messages: [
           { 
             role: 'system', 
-            content: 'You are an expert web developer specializing in high-converting payment pages. Create professional, modern HTML with embedded CSS that follows best practices for conversion optimization and user experience.' 
+            content: 'You are an expert web developer specializing in high-converting payment pages. Create a complete, self-contained HTML file with embedded CSS and inline SVG icons. CRITICAL: You must use ALL provided image URLs and embed all icons as SVG elements directly in the HTML. Do not reference external icon libraries.' 
           },
           { role: 'user', content: prompt }
         ],
-        max_tokens: 4000,
-        temperature: 0.7,
+        max_tokens: 8000,
+        temperature: 0.3,
       }),
     });
 
