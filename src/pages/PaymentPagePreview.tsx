@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Mail, ExternalLink } from "lucide-react";
+import { ArrowLeft, Mail, ExternalLink, Smartphone, Monitor } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export default function PaymentPagePreview() {
@@ -11,6 +11,7 @@ export default function PaymentPagePreview() {
   const navigate = useNavigate();
   const [paymentPage, setPaymentPage] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('desktop');
   const { toast } = useToast();
 
   const pageId = searchParams.get('id');
@@ -113,7 +114,7 @@ export default function PaymentPagePreview() {
             <Card className="bg-gradient-card border-0 shadow-elegant">
               <CardHeader>
                 <CardTitle className="text-2xl">Payment Page Preview</CardTitle>
-                <div className="flex gap-3">
+                <div className="flex flex-wrap gap-3">
                   <Button 
                     onClick={handleOpenInNewWindow}
                     className="bg-gradient-primary hover:shadow-glow transition-all duration-300"
@@ -121,6 +122,27 @@ export default function PaymentPagePreview() {
                     <ExternalLink className="w-4 h-4 mr-2" />
                     Open in New Window
                   </Button>
+                  
+                  <div className="flex bg-muted rounded-lg p-1">
+                    <Button
+                      variant={viewMode === 'desktop' ? 'default' : 'ghost'}
+                      size="sm"
+                      onClick={() => setViewMode('desktop')}
+                      className="px-3"
+                    >
+                      <Monitor className="w-4 h-4 mr-2" />
+                      Desktop
+                    </Button>
+                    <Button
+                      variant={viewMode === 'mobile' ? 'default' : 'ghost'}
+                      size="sm"
+                      onClick={() => setViewMode('mobile')}
+                      className="px-3"
+                    >
+                      <Smartphone className="w-4 h-4 mr-2" />
+                      Mobile
+                    </Button>
+                  </div>
                 </div>
               </CardHeader>
             </Card>
@@ -129,14 +151,30 @@ export default function PaymentPagePreview() {
           <Card className="bg-gradient-card border-0 shadow-elegant">
             <CardHeader>
               <CardTitle>Generated Payment Page: {paymentPage.product_name}</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                {viewMode === 'desktop' ? 'Desktop View (1200px width)' : 'Mobile View (375px width)'}
+              </p>
             </CardHeader>
             <CardContent>
-              <div className="bg-secondary/20 rounded-lg p-4">
-                <iframe
-                  srcDoc={paymentPage.generated_html}
-                  className="w-full h-[600px] border-0 rounded"
-                  title="Payment Page Preview"
-                />
+              <div className="flex justify-center bg-secondary/20 rounded-lg p-4">
+                <div 
+                  className={`
+                    transition-all duration-300 ease-in-out
+                    ${viewMode === 'desktop' 
+                      ? 'w-full max-w-[1200px]' 
+                      : 'w-[375px]'
+                    }
+                  `}
+                >
+                  <iframe
+                    srcDoc={paymentPage.generated_html}
+                    className={`
+                      w-full border-0 rounded shadow-lg
+                      ${viewMode === 'desktop' ? 'h-[600px]' : 'h-[700px]'}
+                    `}
+                    title="Payment Page Preview"
+                  />
+                </div>
               </div>
             </CardContent>
           </Card>
