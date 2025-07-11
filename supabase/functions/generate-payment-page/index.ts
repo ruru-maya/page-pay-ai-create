@@ -18,7 +18,7 @@ serve(async (req) => {
   }
 
   try {
-    const { productName, description, price, availability, brandColor, imageUrls = [], logoUrl, logoPosition } = await req.json();
+    const { productName, description, price, currency, availability, brandColor, imageUrls = [], logoUrl, logoPosition } = await req.json();
 
     console.log('Generating payment page for:', productName);
 
@@ -41,7 +41,8 @@ serve(async (req) => {
 --- Inputs (must use only these) ---
 • Product/Service Name: ${productName}
 • Description: ${description || 'Premium product'}
-• Price: $${price}
+• Price: ${price} ${currency || 'USD'}
+• Currency: ${currency || 'USD'}
 • Availability: ${availability || 'Available now'}
 • Brand Color: ${brandColor} (hex or CSS variable)
 • Image URLs: ${imageList}

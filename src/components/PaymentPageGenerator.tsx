@@ -10,15 +10,30 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Upload, Sparkles, Eye, Palette, DollarSign, Package, Clock, ImageIcon, Mail, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface FormData {
   productName: string;
   description: string;
   price: string;
+  currency: string;
   availability: string;
   brandColor: string;
   images: File[];
 }
+
+// EU currencies with their symbols and codes
+const EU_CURRENCIES = [
+  { code: 'EUR', symbol: '€', name: 'Euro' },
+  { code: 'BGN', symbol: 'лв', name: 'Bulgarian Lev' },
+  { code: 'CZK', symbol: 'Kč', name: 'Czech Koruna' },
+  { code: 'DKK', symbol: 'kr', name: 'Danish Krone' },
+  { code: 'HRK', symbol: 'kn', name: 'Croatian Kuna' },
+  { code: 'HUF', symbol: 'Ft', name: 'Hungarian Forint' },
+  { code: 'PLN', symbol: 'zł', name: 'Polish Złoty' },
+  { code: 'RON', symbol: 'lei', name: 'Romanian Leu' },
+  { code: 'SEK', symbol: 'kr', name: 'Swedish Krona' },
+];
 
 export default function PaymentPageGenerator() {
   const navigate = useNavigate();
@@ -26,6 +41,7 @@ export default function PaymentPageGenerator() {
     productName: "",
     description: "",
     price: "",
+    currency: "EUR",
     availability: "",
     brandColor: "#00C851",
     images: []
@@ -102,6 +118,7 @@ export default function PaymentPageGenerator() {
           productName: formData.productName,
           description: formData.description,
           price: formData.price,
+          currency: formData.currency,
           availability: formData.availability,
           brandColor: formData.brandColor,
           imageUrls: imageUrls,
@@ -219,7 +236,7 @@ export default function PaymentPageGenerator() {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
             <Label htmlFor="price">Price *</Label>
             <div className="relative">
@@ -233,6 +250,25 @@ export default function PaymentPageGenerator() {
                 className="pl-10 bg-secondary/50 border-border"
               />
             </div>
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="currency">Currency *</Label>
+            <Select
+              value={formData.currency}
+              onValueChange={(value) => handleInputChange("currency", value)}
+            >
+              <SelectTrigger className="bg-secondary/50 border-border">
+                <SelectValue placeholder="Select currency" />
+              </SelectTrigger>
+              <SelectContent>
+                {EU_CURRENCIES.map((currency) => (
+                  <SelectItem key={currency.code} value={currency.code}>
+                    {currency.symbol} {currency.code} - {currency.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           
           <div className="space-y-2">
