@@ -20,6 +20,12 @@ interface FormData {
   availability: string;
   brandColor: string;
   images: File[];
+  // Storytelling fields
+  targetAudience: string;
+  problemItSolves: string;
+  customerJourney: string;
+  uniqueStory: string;
+  testimonialStyle: string;
 }
 
 // EU currencies with their symbols and codes
@@ -44,7 +50,13 @@ export default function PaymentPageGenerator() {
     currency: "EUR",
     availability: "",
     brandColor: "#00C851",
-    images: []
+    images: [],
+    // Storytelling fields
+    targetAudience: "",
+    problemItSolves: "",
+    customerJourney: "",
+    uniqueStory: "",
+    testimonialStyle: "success"
   });
   
   const [isGenerating, setIsGenerating] = useState(false);
@@ -122,6 +134,12 @@ export default function PaymentPageGenerator() {
           availability: formData.availability,
           brandColor: formData.brandColor,
           imageUrls: imageUrls,
+          // Storytelling data
+          targetAudience: formData.targetAudience,
+          problemItSolves: formData.problemItSolves,
+          customerJourney: formData.customerJourney,
+          uniqueStory: formData.uniqueStory,
+          testimonialStyle: formData.testimonialStyle,
         },
       });
 
@@ -226,14 +244,87 @@ export default function PaymentPageGenerator() {
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="description">Description/What's included</Label>
+          <Label htmlFor="description">Basic Description</Label>
           <Textarea
             id="description"
             placeholder="Complete course with 50+ lessons, downloadable resources, lifetime access..."
             value={formData.description}
             onChange={(e) => handleInputChange("description", e.target.value)}
-            className="bg-secondary/50 border-border min-h-[100px]"
+            className="bg-secondary/50 border-border min-h-[80px]"
           />
+        </div>
+
+        <Separator />
+
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-primary" />
+            <h3 className="text-lg font-semibold">Storytelling Enhancement</h3>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="targetAudience">Target Audience</Label>
+              <Input
+                id="targetAudience"
+                placeholder="Busy entrepreneurs, creative professionals..."
+                value={formData.targetAudience}
+                onChange={(e) => handleInputChange("targetAudience", e.target.value)}
+                className="bg-secondary/50 border-border"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="problemItSolves">Problem It Solves</Label>
+              <Input
+                id="problemItSolves"
+                placeholder="Lack of time to learn web design properly..."
+                value={formData.problemItSolves}
+                onChange={(e) => handleInputChange("problemItSolves", e.target.value)}
+                className="bg-secondary/50 border-border"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="customerJourney">Customer Success Journey</Label>
+            <Textarea
+              id="customerJourney"
+              placeholder="From struggling with DIY websites to creating professional designs in weeks..."
+              value={formData.customerJourney}
+              onChange={(e) => handleInputChange("customerJourney", e.target.value)}
+              className="bg-secondary/50 border-border min-h-[80px]"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="uniqueStory">Unique Story/Origin</Label>
+            <Textarea
+              id="uniqueStory"
+              placeholder="Created by industry veterans after 10 years of teaching Fortune 500 companies..."
+              value={formData.uniqueStory}
+              onChange={(e) => handleInputChange("uniqueStory", e.target.value)}
+              className="bg-secondary/50 border-border min-h-[80px]"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="testimonialStyle">Testimonial Style</Label>
+            <Select
+              value={formData.testimonialStyle}
+              onValueChange={(value) => handleInputChange("testimonialStyle", value)}
+            >
+              <SelectTrigger className="bg-secondary/50 border-border">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="success">Success Stories</SelectItem>
+                <SelectItem value="transformation">Before/After Transformation</SelectItem>
+                <SelectItem value="emotional">Emotional Journey</SelectItem>
+                <SelectItem value="professional">Professional Achievement</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -291,7 +382,7 @@ export default function PaymentPageGenerator() {
           className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300"
           disabled={!formData.productName || !formData.price}
         >
-          Continue to Branding
+          Continue to Branding & Assets
         </Button>
       </CardContent>
     </Card>

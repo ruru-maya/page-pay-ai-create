@@ -18,7 +18,10 @@ serve(async (req) => {
   }
 
   try {
-    const { productName, description, price, currency, availability, brandColor, imageUrls = [], logoUrl, logoPosition } = await req.json();
+    const { 
+      productName, description, price, currency, availability, brandColor, imageUrls = [], 
+      targetAudience, problemItSolves, customerJourney, uniqueStory, testimonialStyle 
+    } = await req.json();
 
     console.log('Generating payment page for:', productName);
 
@@ -50,6 +53,13 @@ PRODUCT DETAILS:
 • Price: ${price} ${currency || 'USD'}
 • Availability: ${availability || 'Available now'}
 • Brand Color: ${brandColor}
+
+STORYTELLING CONTEXT:
+• Target Audience: ${targetAudience || 'General consumers looking for quality solutions'}
+• Problem It Solves: ${problemItSolves || 'Common challenges faced by the target audience'}
+• Customer Journey: ${customerJourney || 'Transformation from problem to success'}
+• Unique Story: ${uniqueStory || 'Innovative approach developed through expertise'}
+• Testimonial Style: ${testimonialStyle || 'success'}
 
 ${imageInstructions}
 
@@ -153,10 +163,10 @@ MANDATORY ICON INTEGRATION:
 • A simple JSON-LD schema snippet (\`Product\`, \`Offer\`) referencing the product name, price, availability, and image.
 
 2️⃣ Hero Section  
-• Headline (H1) that taps into your audience's core desire or pain, featuring a "hero narrative" (1–2 sentences) that sets the scene.  
-• Subheadline (H2) with a mini-story arc (Problem → Epiphany → Solution).  
+• Headline (H1) that directly addresses the target audience (${targetAudience}) and their core pain point (${problemItSolves}), featuring a compelling "hero narrative" that immediately resonates.  
+• Subheadline (H2) with a story arc: Problem (${problemItSolves}) → Transformation (${customerJourney}) → Unique Solution (${uniqueStory}).  
 • Full-bleed hero image using the provided image: include ideal aspect ratio, suggested \`srcset\` for retina and mobile, and lazy-load attributes.  
-• Primary CTA button text (e.g. "Start My Journey," "Claim Product Now") with micro-copy beneath (e.g. "No credit card required"). Style rules:  
+• Primary CTA button text that reflects the customer journey (e.g. "Start My Transformation," "Begin My Success Story") with micro-copy beneath that builds trust. Style rules:  
   - Background: ${brandColor};  
   - Font-size: 1.25rem;  
   - Padding: 0.75rem 1.5rem;  
@@ -165,26 +175,26 @@ MANDATORY ICON INTEGRATION:
   - Focus: outline with 3px solid high-contrast.
 
 3️⃣ Story-Driven Features & Benefits  
-• Three to six "feature cards," each with:  
-  - A 1-sentence "dramatic moment" story that shows transformation;  
-  - Benefit-focused headline;  
-  - Two-line body copy;  
-  - Icon/image suggestion (120×120 px SVG or PNG).  
+• Three to six "feature cards" that follow the customer journey (${customerJourney}), each with:  
+  - A 1-sentence "transformation moment" story that shows how this feature solves part of the main problem (${problemItSolves});  
+  - Benefit-focused headline that speaks to the target audience (${targetAudience});  
+  - Two-line body copy that continues the narrative arc;  
+  - Contextually appropriate icon from the provided SVG library.  
 • Layout: 2-column grid on desktop, 1-col on mobile, 32px gutter.  
 • Subtle entrance animations (fade-up, 200ms delay between cards).
 
 4️⃣ Social Proof & Trust Builders  
-• Three scroll-stopping testimonials: name, title/role, 2-sentence story of "before vs. after."  
-• Star rating component (5-star SVG) with microdata (\`itemprop="reviewRating"\`).  
-• "As featured in" bar: list 3 reputable outlets (use placeholder logos + real alt text).  
-• Trust badge row: SSL-secure, money-back guarantee, free support icons.
+• Three compelling testimonials styled as ${testimonialStyle} stories: realistic names, titles/roles relevant to ${targetAudience}, with detailed "before vs. after" narratives that mirror the customer journey (${customerJourney}).  
+• Star rating component (5-star SVG) with microdata (\`itemprop="reviewRating"\`) showing consistent 4.8-5.0 ratings.  
+• "As featured in" bar: list 3 reputable outlets relevant to the target audience with placeholder logos + descriptive alt text.  
+• Trust badge row: SSL-secure, money-back guarantee, free support icons using the provided SVG library.
 
 5️⃣ Pricing & Packages  
-• Clear, responsive pricing table: single offer or 2-tier split (e.g. Standard vs. Premium).  
-• Use the price in a prominent font (2rem).  
-• Bulleted "What's included" list—tie each bullet back to the core story.  
-• Secondary CTA ("Choose Plan") styled in the brand color with subtle box-shadow.  
-• Section header telling a micro-anecdote about how customers used their purchase.
+• Clear, responsive pricing section that references the unique story (${uniqueStory}) and value proposition.  
+• Use the price (${price} ${currency}) in a prominent font (2rem) with context about the transformation value.  
+• Bulleted "What's included" list—tie each bullet back to solving the core problem (${problemItSolves}) and the customer journey.  
+• Secondary CTA ("Choose Plan") styled in the brand color with micro-copy that continues the story narrative.  
+• Section header with a mini-story about how customers like the target audience (${targetAudience}) achieved success.
 
 6️⃣ Urgency & Scarcity  
 • Line of dynamic text for availability ("Only X spots left!").  
@@ -192,8 +202,9 @@ MANDATORY ICON INTEGRATION:
 • Suggest an exit-intent popup with last-chance offer (10% off coupon).
 
 7️⃣ FAQ & Objection Handling  
-• Five FAQ items that neutralize top objections (price, ease of use, support, results, guarantees).  
-• Accordion markup (\`<details>\`/\`<summary>\`) with ARIA attributes for screen readers.
+• Five FAQ items that address concerns specific to the target audience (${targetAudience}) and reinforce the story elements about solving their problem (${problemItSolves}).  
+• Accordion markup (\`<details>\`/\`<summary>\`) with ARIA attributes for screen readers.  
+• Each answer should reference elements from the unique story (${uniqueStory}) and customer journey (${customerJourney}).
 
 8️⃣ Footer & Legal  
 • Compact footer with links: Privacy Policy, Terms of Service, Returns, Contact.  
