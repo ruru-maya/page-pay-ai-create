@@ -36,11 +36,11 @@ serve(async (req) => {
       : 'Use placeholder images or create a visually appealing page without images';
     
     // Create OpenAI prompt for generating payment page HTML
-    const prompt = `You are an expert web developer creating a complete, professional HTML payment page. You MUST include ALL provided images and ensure icons/graphics are properly embedded.
+    const prompt = `You are an expert web developer creating a complete, professional HTML payment page. You MUST include ALL provided images and use the provided icon library for all icons.
 
 CRITICAL REQUIREMENTS:
 1. Use ALL provided image URLs in the HTML: ${imageList}
-2. Embed SVG icons directly in the HTML (no external icon fonts)
+2. Use ONLY the SVG icons from the provided icon library below
 3. Create a complete, self-contained HTML file with embedded CSS
 4. Make the page visually stunning and conversion-optimized
 
@@ -59,11 +59,91 @@ MANDATORY IMAGE INTEGRATION:
 - Ensure images are properly sized and responsive
 - Add loading="lazy" to all images except the hero image
 
-ICON REQUIREMENTS:
-- Use inline SVG icons (NO external libraries like Font Awesome)
-- Include icons for: features, testimonials, trust badges, social proof
-- Create custom SVG icons that match the brand color
-- Ensure all icons are accessible with proper aria-labels
+ICON LIBRARY - USE THESE EXACT SVG PATHS:
+
+<!-- Star Icon (for ratings, premium features) -->
+<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+</svg>
+
+<!-- Shield Icon (for security, trust, protection) -->
+<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+</svg>
+
+<!-- Check/Checkmark Icon (for features, benefits, completed items) -->
+<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+</svg>
+
+<!-- Heart Icon (for favorites, love, testimonials) -->
+<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+</svg>
+
+<!-- Lightning/Bolt Icon (for speed, power, energy) -->
+<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path d="M7 2v11h3v9l7-12h-4l3-8z"/>
+</svg>
+
+<!-- User Icon (for testimonials, profiles, accounts) -->
+<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+</svg>
+
+<!-- Crown Icon (for premium, VIP, exclusive) -->
+<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path d="M5 16L3 14l5.5-4.5L12 13l3.5-3.5L21 14l-2 2H5zm2.5-10C7.5 4.34 8.84 3 10.5 3S13.5 4.34 13.5 6 12.16 9 10.5 9 7.5 7.66 7.5 6zm9 0C16.5 4.34 17.84 3 19.5 3S22.5 4.34 22.5 6 21.16 9 19.5 9 16.5 7.66 16.5 6zM12 4.5C12 3.12 13.12 2 14.5 2S17 3.12 17 4.5 15.88 7 14.5 7 12 5.88 12 4.5z"/>
+</svg>
+
+<!-- Gift Icon (for bonuses, offers, free items) -->
+<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-2 .89-2 2v4h2v8c0 1.11.89 2 2 2h12c1.11 0 2-.89 2-2v-8h2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z"/>
+</svg>
+
+<!-- Clock Icon (for time-limited offers, delivery time) -->
+<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/>
+</svg>
+
+<!-- Dollar Sign Icon (for pricing, money, value) -->
+<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+</svg>
+
+<!-- Truck Icon (for delivery, shipping) -->
+<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+</svg>
+
+<!-- Lock Icon (for security, private, secure) -->
+<svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+</svg>
+
+ICON USAGE INSTRUCTIONS:
+1. Copy the exact SVG code from above - do NOT modify the paths
+2. Apply your brand color using fill="currentColor" and set the text color in CSS
+3. Adjust size using width and height classes (w-4 h-4, w-6 h-6, w-8 h-8, etc.)
+4. Use contextually appropriate icons:
+   - Star: for ratings, premium features, highlights
+   - Shield: for security guarantees, protection, trust badges
+   - Check: for feature lists, benefits, included items
+   - Heart: for customer love, testimonials, favorites
+   - Lightning: for speed, instant delivery, power
+   - User: for testimonials, customer stories, accounts
+   - Crown: for premium plans, VIP features, exclusive offers
+   - Gift: for bonuses, free items, special offers
+   - Clock: for time-limited offers, quick delivery
+   - Dollar: for pricing, value propositions, money-back
+   - Truck: for shipping, delivery, logistics
+   - Lock: for security, privacy, exclusive access
+
+MANDATORY ICON INTEGRATION:
+- Use at least 5-8 different icons throughout the page
+- Style all icons with your brand color
+- Ensure icons enhance the message and aren't just decorative
+- Add proper aria-labels for accessibility
 
 --- Deliverables ---
 
